@@ -1,0 +1,58 @@
+# +------------------------------------------------------+ #
+# |                 Jackpot (Configuration)              | #
+# +------------------------------------------------------+ #
+# If you have problems, join the Jackpot help support channel:
+# https://discord.gg/gFwVVTE
+# -----------------------------------------------------------
+# Use these placeholders to display information:
+# -
+# {amount} ---> Amount of tickets purchased.
+# {price} ---> Price for tickets purchased.
+# -
+# {timer} ---> Total time remaining till jackpot draw.
+# {total-value} ---> Total value of current jackpot.
+# {tax} ---> Jackpot tax percentage.
+# {total-tickets} ---> Total amount of jackpot tickets.
+# {player-tickets} ---> Number of jackpot tickets purchased by the player.
+# {player-percent} ---> The percentage change the player will win the draw.
+# -
+# {winner} ---> The player name of the current jackpot draw winner.
+# {prize} ---> The current jackpot draw prize.
+# -----------------------------------------------------------
+# IMPORTANT NOTES:
+#    > Wrap your text in '' (quotes) if using color codes.
+#    > All time values are in seconds.
+#    > A tax-percent value of 0.10 is a 10% tax.
+# -----------------------------------------------------------
+jackpot:
+  ticket-price: 10000
+  draw-time: 10800
+  tax-percent: 0.10
+  warnings:
+    - 3600
+    - 1800
+    - 600
+    - 60
+messages:
+  buy-ticket: '&a&l(!) §aYou successfully purchased {amount} tickets for ${price}'
+  cannot-afford: '&c&l(!) §cYou cannot afford the total price of ${price} for {amount} tickets!'
+  jackpot-info:
+    - ''
+    - '&e&lServer Jackpot'
+    - ' &b&lJackpot Value: &e${total-value} &7(-{tax}% tax)'
+    - ' &b&lTickets Sold: &e{total-tickets}'
+    - ' &b&lYour Tickets: &a{player-tickets} &7({player-percent}%)'
+    - ''
+    - '&b&l(!) &bNext Winner in &n{timer}&r'
+    - ''
+  jackpot-results:
+    - ''
+    - '            &b&l(!) --- JACKPOT RESULTS --- &b&l(!)'
+    - '   &7Congratulation to &a{winner}&7 for winning the lottery!'
+    - '    &7A prize of &a${prize}&7 has been added to their balance.'
+    - ''
+  jackpot-warning:
+    - ''
+    - '&b&l(!) &bServer Jackpot (${total-value}) drawing in &l{timer}&b!'
+    - '&7Use &e/jackpot buy &7to purchase a ticket!'
+    - ''

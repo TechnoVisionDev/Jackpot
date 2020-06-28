@@ -1,0 +1,11 @@
+name: Jackpot
+version: 1.0
+main: com.technovision.jackpot.Jackpot
+api-version: 1.13
+depend: [Vault]
+authors: [TechnoVision]
+commands:
+  jackpot:
+    description: View the current jackpot
+    usage: /<command>
+    aliases: [jackpots, lottery]
