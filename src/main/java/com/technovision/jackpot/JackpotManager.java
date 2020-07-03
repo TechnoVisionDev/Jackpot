@@ -12,16 +12,16 @@ import static com.technovision.jackpot.Jackpot.*;
 
 public class JackpotManager implements CommandExecutor {
 
-    public static List<UUID> JACKPOT;
+    public static LotteryBag<UUID> JACKPOT;
     public static long MONEY;
     public static long TOTAL_TICKETS;
-    public static HashMap<String, Integer> TICKETS;
+    public static HashMap<String, Long> TICKETS;
 
     public JackpotManager() {
         MONEY = 0;
         TOTAL_TICKETS = 0;
-        JACKPOT = new ArrayList<UUID>();
-        TICKETS = new HashMap<String, Integer>();
+        JACKPOT = new LotteryBag<UUID>();
+        TICKETS = new HashMap<String, Long>();
         PLUGIN.getCommand("jackpot").setExecutor(this);
     }
 
@@ -29,8 +29,7 @@ public class JackpotManager implements CommandExecutor {
         if (!JACKPOT.isEmpty()) {
             double prize = MONEY - (MONEY * MessageHandler.getJackpotDouble("tax-percent"));
             String prizeString = FORMATTER.format(prize);
-            Collections.shuffle(JACKPOT);
-            Player player = Bukkit.getPlayer(JACKPOT.get(0));
+            Player player = Bukkit.getPlayer(JACKPOT.getRandom());
             List<String> msg = MessageHandler.parseResults(prizeString, player.getName());
             for (String line : msg) {
                 Bukkit.broadcastMessage(line);
@@ -40,18 +39,16 @@ public class JackpotManager implements CommandExecutor {
         MONEY = 0;
         TOTAL_TICKETS = 0;
         TICKETS.clear();
-        JACKPOT.clear();
+        JACKPOT = new LotteryBag<UUID>();
     }
 
-    public void enterJackpot(Player player, int amt, int total) {
-        for (int i = 0; i < amt; i++) {
-            JACKPOT.add(player.getUniqueId());
-        }
+    public void enterJackpot(Player player, long amt, int total) {
+        JACKPOT.addEntry(player.getUniqueId(), amt);
         ECON.withdrawPlayer(player, total);
         MONEY += total;
         TOTAL_TICKETS += amt;
         if (TICKETS.containsKey(player.getUniqueId().toString())) {
-            int oldAmt = TICKETS.get(player.getUniqueId().toString());
+            long oldAmt = TICKETS.get(player.getUniqueId().toString());
             TICKETS.put(player.getUniqueId().toString(), oldAmt + amt);
         } else {
             TICKETS.put(player.getUniqueId().toString(), amt);
@@ -95,14 +92,15 @@ public class JackpotManager implements CommandExecutor {
                         player.sendMessage("§c§l(!) §c/jackpot buy <amount>");
                     }
                 } else {
-                    int amount = 0;
+                    long amount = 0;
                     double percent = 0;
                     if (TICKETS.containsKey(player.getUniqueId().toString())) {
                         amount = TICKETS.get(player.getUniqueId().toString());
                         percent = ((double) amount / TOTAL_TICKETS) * 100;
                     }
                     String tax = String.valueOf((int) (MessageHandler.getJackpotDouble("tax-percent") * 100));
-                    List<String> msg = MessageHandler.parseInfo(FORMATTER.format(MONEY), tax, TOTAL_TICKETS, amount, (int) percent);
+                    List<String> msg = MessageHandler.parseInfo(
+                            FORMATTER.format(MONEY), tax, TOTAL_TICKETS, amount, (int) percent);
                     for (String line : msg) {
                         player.sendMessage(line);
                     }

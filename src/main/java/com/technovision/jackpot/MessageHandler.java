@@ -19,14 +19,14 @@ public class MessageHandler {
         return parsedMsg;
     }
 
-    public static List<String> parseInfo(String totalValue, String tax, long totalTickets, int playerTickets, int playerPercent) {
+    public static List<String> parseInfo(String totalValue, String tax, long totalTickets, long playerTickets, int playerPercent) {
         List<String> msg = Jackpot.PLUGIN.getConfig().getStringList("messages.jackpot-info");
         List<String> parsedMsg = new ArrayList<String>();
         for (String line : msg) {
             line = line.replace("{total-value}", totalValue);
             line = line.replace("{tax}", tax);
-            line = line.replace("{total-tickets}", String.valueOf(totalTickets));
-            line = line.replace("{player-tickets}", String.valueOf(playerTickets));
+            line = line.replace("{total-tickets}", FORMATTER.format(totalTickets));
+            line = line.replace("{player-tickets}", FORMATTER.format(playerTickets));
             line = line.replace("{player-percent}", String.valueOf(playerPercent));
             line = line.replace("{timer}", TIMER.getTime());
             line = line.replace("&", "§");
@@ -48,7 +48,7 @@ public class MessageHandler {
         return parsedMsg;
     }
 
-    public static String parseBuyMessage(String section, int amt) {
+    public static String parseBuyMessage(String section, long amt) {
         String msg = Jackpot.PLUGIN.getConfig().getString("messages." + section);
         msg = msg.replace("{amount}", String.valueOf(amt));
         msg = msg.replace("{price}", FORMATTER.format(PLUGIN.getConfig().getInt("jackpot.ticket-price") * amt));
