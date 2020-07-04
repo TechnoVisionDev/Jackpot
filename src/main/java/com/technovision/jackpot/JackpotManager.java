@@ -27,7 +27,7 @@ public class JackpotManager implements CommandExecutor {
 
     public void awardWinner() {
         if (!JACKPOT.isEmpty()) {
-            double prize = MONEY - (MONEY * MessageHandler.getJackpotDouble("tax-percent"));
+            long prize = (long) (MONEY - (MONEY * MessageHandler.getJackpotDouble("tax-percent")));
             String prizeString = FORMATTER.format(prize);
             Player player = Bukkit.getPlayer(JACKPOT.getRandom());
             List<String> msg = MessageHandler.parseResults(prizeString, player.getName());
