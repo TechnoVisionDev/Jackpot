@@ -1,6 +1,7 @@
 package com.technovision.jackpot;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,7 @@ public class JackpotManager implements CommandExecutor {
         if (!JACKPOT.isEmpty()) {
             long prize = (long) (MONEY - (MONEY * MessageHandler.getJackpotDouble("tax-percent")));
             String prizeString = FORMATTER.format(prize);
-            Player player = Bukkit.getPlayer(JACKPOT.getRandom());
+            OfflinePlayer player = Bukkit.getOfflinePlayer(JACKPOT.getRandom());
             List<String> msg = MessageHandler.parseResults(prizeString, player.getName());
             for (String line : msg) {
                 Bukkit.broadcastMessage(line);
@@ -42,7 +43,7 @@ public class JackpotManager implements CommandExecutor {
         JACKPOT = new LotteryBag<UUID>();
     }
 
-    public void enterJackpot(Player player, long amt, int total) {
+    public void enterJackpot(Player player, long amt, long total) {
         JACKPOT.addEntry(player.getUniqueId(), amt);
         ECON.withdrawPlayer(player, total);
         MONEY += total;
@@ -63,16 +64,16 @@ public class JackpotManager implements CommandExecutor {
             if (cmd.getName().equalsIgnoreCase("jackpot")) {
                 if (args.length > 0) {
                     if (args[0].equalsIgnoreCase("buy") || args[0].equalsIgnoreCase("bet") || args[0].equalsIgnoreCase("place")) {
-                        int amt = 1;
+                        long amt = 1;
                         if (args.length >= 2) {
                             try {
-                                amt = Integer.parseInt(args[1]);
+                                amt = Long.parseLong(args[1]);
                             } catch (NumberFormatException e) {
                                 player.sendMessage("§c§l(!) §c/jackpot buy <amount>");
                                 return true;
                             }
                         }
-                        int total = MessageHandler.getJackpotValue("ticket-price") * amt;
+                        long total = MessageHandler.getJackpotValue("ticket-price") * amt;
                         if (ECON.getBalance(player) >= total) {
                             enterJackpot(player, amt, total);
                         } else {
