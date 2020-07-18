@@ -1,5 +1,8 @@
 package com.technovision.jackpot;
 
+import com.technovision.jackpot.gui.JackpotEvents;
+import com.technovision.jackpot.system.JackpotManager;
+import com.technovision.jackpot.system.Timer;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -30,6 +33,7 @@ public class Jackpot extends JavaPlugin implements CommandExecutor {
         JACKPOT = new JackpotManager();
         TIMER = new Timer();
         TIMER.runTaskTimer(this, 0L, 20L);
+        getServer().getPluginManager().registerEvents(new JackpotEvents(), this);
     }
 
     public void loadConfig() {

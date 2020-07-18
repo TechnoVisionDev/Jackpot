@@ -1,4 +1,4 @@
-package com.technovision.jackpot;
+package com.technovision.jackpot.system;
 
 import java.util.Random;
 import java.util.ArrayList;

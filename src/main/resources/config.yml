@@ -33,6 +33,7 @@ jackpot:
     - 1800
     - 600
     - 60
+  confirm-gui: true
 messages:
   buy-ticket: '&a&l(!) §aYou successfully purchased {amount} tickets for ${price}'
   cannot-afford: '&c&l(!) §cYou cannot afford the total price of ${price} for {amount} tickets!'
@@ -56,3 +57,25 @@ messages:
     - '&b&l(!) &bServer Jackpot (${total-value}) drawing in &l{timer}&b!'
     - '&7Use &e/jackpot buy &7to purchase a ticket!'
     - ''
+confirm-gui:
+  title: 'Confirm {amount} Tickets'
+  confirm-button:
+    material: 'LIME_STAINED_GLASS_PANE'
+    name: '&a&lConfirm Purchase'
+    lore:
+      - '&7Click to &aconfirm &7purchase of'
+      - '&a{amount} &7ticket(s) for &a${price}'
+  cancel-button:
+    material: 'RED_STAINED_GLASS_PANE'
+    name: '&c&lCancel Purchase'
+    lore:
+      - '&7Click to &ccancel &7purchase of'
+      - '&c{amount} &7ticket(s) for &c${price}'
+  center-button:
+    material: 'BOOK'
+    name: '&e&l(!) Confirm Your Purchase (!)'
+    lore:
+      - '&7Select whether you would like to'
+      - '&7confirm or cancel your ticket purchase.'
+  cancel-message: '&c&l(!) &cYou have canceled your ticket purchase!'
+

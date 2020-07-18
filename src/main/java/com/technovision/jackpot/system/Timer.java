@@ -1,5 +1,7 @@
-package com.technovision.jackpot;
+package com.technovision.jackpot.system;
 
+import com.technovision.jackpot.Jackpot;
+import com.technovision.jackpot.messages.MessageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 

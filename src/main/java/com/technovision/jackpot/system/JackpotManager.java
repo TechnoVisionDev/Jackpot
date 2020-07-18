@@ -1,5 +1,7 @@
-package com.technovision.jackpot;
+package com.technovision.jackpot.system;
 
+import com.technovision.jackpot.gui.ConfirmGUI;
+import com.technovision.jackpot.messages.MessageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -43,9 +45,9 @@ public class JackpotManager implements CommandExecutor {
         JACKPOT = new LotteryBag<UUID>();
     }
 
-    public void enterJackpot(Player player, long amt, long total) {
-        JACKPOT.addEntry(player.getUniqueId(), amt);
+    public static void enterJackpot(Player player, long amt, long total) {
         ECON.withdrawPlayer(player, total);
+        JACKPOT.addEntry(player.getUniqueId(), amt);
         MONEY += total;
         TOTAL_TICKETS += amt;
         if (TICKETS.containsKey(player.getUniqueId().toString())) {
@@ -75,7 +77,11 @@ public class JackpotManager implements CommandExecutor {
                         }
                         long total = MessageHandler.getJackpotValue("ticket-price") * amt;
                         if (ECON.getBalance(player) >= total) {
-                            enterJackpot(player, amt, total);
+                            if (MessageHandler.getJackpotBoolean("confirm-gui")) {
+                                player.openInventory(new ConfirmGUI(amt, total).getInventory());
+                            } else {
+                                enterJackpot(player, amt, total);
+                            }
                         } else {
                             player.sendMessage(MessageHandler.parseBuyMessage("cannot-afford", amt));
                         }
