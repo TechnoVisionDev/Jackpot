@@ -62,14 +62,15 @@ public class JackpotManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player) sender;
             if (cmd.getName().equalsIgnoreCase("jackpot")) {
+                Player player = (Player) sender;
                 if (args.length > 0) {
                     if (args[0].equalsIgnoreCase("buy") || args[0].equalsIgnoreCase("bet") || args[0].equalsIgnoreCase("place")) {
                         long amt = 1;
                         if (args.length >= 2) {
                             try {
                                 amt = Long.parseLong(args[1]);
+                                if (amt < 1) { throw new NumberFormatException(); }
                             } catch (NumberFormatException e) {
                                 player.sendMessage("§c§l(!) §c/jackpot buy <amount>");
                                 return true;
