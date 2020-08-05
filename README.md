@@ -8,3 +8,9 @@ Jackpot is the Ultimate Automatic Lottery Plugin, inspired by CosmicPvP's jackpo
 [<img align="left" alt="tomm.peters | Instagram" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg" />][instagram]
 [<img align="left" alt="TechnoVision | Instagram" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/discord.svg" />][discord]
 
+<br />
+
+[youtube]: https://youtube.com/TechnoVisionTV
+[twitter]: https://twitter.com/TechnoVisionTV
+[instagram]: https://instagram.com/tomm.peters
+[discord]: https://discord.gg/8NV6QYx
